@@ -1,0 +1,21 @@
+plugins {
+    id 'java-conventions'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+group = 'com.empirilytics.qatch.calibration'
+version = '2.0.0'
+
+dependencies {
+    implementation project(":core")
+    implementation project(":analyzers")
+}
+
+javafx {
+    version = '17'
+    modules = ['javafx.controls', 'javafx.fxml', ]
+}
+
+javadoc {
+    destinationDir = new File(project.rootDir.toString() + "/docs/microservice/javadoc")
+}

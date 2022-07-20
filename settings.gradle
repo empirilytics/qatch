@@ -1,0 +1,16 @@
+pluginManagement {
+  repositories {
+    mavenLocal()
+    gradlePluginPortal()
+  }
+}
+
+rootProject.name = 'qatch-empirilytics'
+include 'app:cli'
+//include 'app:gui'
+include 'core'
+include 'microservice'
+include 'calibration'
+include 'analyzers'
+include 'it'
+

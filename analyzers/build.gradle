@@ -1,0 +1,18 @@
+import java.nio.file.Paths
+
+plugins {
+    id 'java-conventions'
+}
+
+group = 'com.empirilytics.qatch.analyzers'
+version = '1.0'
+
+dependencies {
+    implementation project(":core")
+
+    implementation "org.antlr:ST4:4.3.3"
+}
+
+javadoc {
+    destinationDir = new File(project.rootDir.toString() + "/docs/analyzers/javadoc")
+}

@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library-conventions'
+}
+
+group = 'com.empirilytics.qatch.core'
+version = '1.0.0'
+
+dependencies {
+}
+
+javadoc {
+    destinationDir = new File(project.rootDir.toString() + "/docs/core/javadoc")
+}
+  
