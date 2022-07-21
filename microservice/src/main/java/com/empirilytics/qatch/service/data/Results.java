@@ -25,7 +25,7 @@ import java.util.Map;
 @Slf4j
 public class Results extends Model {
 
-  /** Empty contructor, needed by ActiveJDBC */
+  /** Empty constructor, needed by ActiveJDBC */
   public Results() {}
 
   /**
@@ -138,7 +138,7 @@ public class Results extends Model {
   }
 
   /**
-   * Constructs a new Resuls object from a provided file path
+   * Constructs a new Results object from a provided file path
    *
    * @param pathStr String representing the path to the file
    * @return The new results object, or null if the file could not be read

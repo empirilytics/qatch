@@ -4,7 +4,7 @@ import com.empirilytics.qatch.service.data.DbManager;
 import com.empirilytics.qatch.service.handlers.EvaluateHandler;
 import com.empirilytics.qatch.service.handlers.EvaluationHandler;
 import com.empirilytics.qatch.service.handlers.StatusHandler;
-import com.empirilytics.qatch.service.providers.ProviderLoader;
+import com.empirilytics.qatch.service.lang.providers.ProviderLoader;
 import io.javalin.Javalin;
 import io.javalin.plugin.openapi.OpenApiOptions;
 import io.javalin.plugin.openapi.OpenApiPlugin;
@@ -12,6 +12,7 @@ import io.javalin.plugin.openapi.ui.ReDocOptions;
 import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import picocli.CommandLine;
@@ -38,6 +39,7 @@ import picocli.CommandLine.Option;
     description = "blah blah blah...",
     footerHeading = "%n",
     footer = "Copyright (c) 2022 Empirilytics")
+@Slf4j
 public class QatchService implements Runnable {
 
   private static final String ANSI_CYAN = "\u001B[36m";
@@ -103,6 +105,7 @@ public class QatchService implements Runnable {
     new CommandLine(new QatchService()).setColorScheme(colorScheme).execute(args);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void run() {
     System.out.println(
@@ -157,7 +160,8 @@ public class QatchService implements Runnable {
         app.post("api/evaluate", new EvaluateHandler(context));
 
         app.start(getPort());
-      } catch (Exception e) {
+      } catch (Exception ex) {
+        log.error(ex.getMessage());
       }
     }
   }

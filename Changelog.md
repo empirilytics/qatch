@@ -22,7 +22,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Gradle build files and updated dependencies in order to make the build faster and less dependent on a single machine's
   environment
 - A microservice wrapper for the execution of the quality analysis
-- Unit tests for every class and method in every module
+- Unit tests for the core module
+- Documentation of the project
 
 ### Removed
 

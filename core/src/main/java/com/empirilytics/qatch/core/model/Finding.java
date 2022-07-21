@@ -15,7 +15,6 @@ import lombok.ToString;
  * @version 2.0.0
  */
 @XStreamAlias("finding")
-@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class Finding extends Measure {
 
@@ -24,7 +23,6 @@ public class Finding extends Measure {
   @XStreamAsAttribute
   @Getter
   @Setter
-  @ToString.Include
   @EqualsAndHashCode.Include
   private String rulesetPath;
 

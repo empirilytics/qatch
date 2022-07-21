@@ -74,31 +74,4 @@ public class EvaluationHandler extends BaseGetHandler {
 
     return json;
   }
-
-  public static void main(String[] args) {
-    String id = "Small_Single_File";
-    System.out.println("Params Processed, found: id = " + id);
-
-    DbManager.instance().loadCredentials();
-
-    Results.fromJson("/home/idg/bin/Qatch/qservice/output/small_single_file_evalResults.json");
-
-    DbManager.instance().open();
-    Project proj = Project.findFirst("submissionId = ?", id);
-    Results res = Results.findFirst("submissionId = ?", id);
-
-    String json = "";
-    if (res != null) {
-      json = res.toJson(true);
-    } else {
-      if (proj != null) {
-        json = "\"Evaluation has not completed\"";
-      } else {
-        json = "\"No such project with id: " + id + "\"";
-      }
-    }
-    DbManager.instance().close();
-
-    System.out.println(json);
-  }
 }

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class DbManager {
 
   //  private final ReadWriteLock lock = new ReentrantReadWriteLock();
-  private boolean open;
+  //  private boolean open;
   private DbCredentials credentials;
   private List<String> tables = ImmutableList.of("results", "projects");
 

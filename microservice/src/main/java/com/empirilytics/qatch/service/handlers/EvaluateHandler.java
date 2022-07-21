@@ -1,12 +1,12 @@
 package com.empirilytics.qatch.service.handlers;
 
-import com.empirilytics.qatch.service.EvalRunner;
+import com.empirilytics.qatch.service.eval.EvalRunner;
 import com.empirilytics.qatch.service.ServerContext;
 import com.empirilytics.qatch.service.data.Content;
 import com.empirilytics.qatch.service.data.DbManager;
 import com.empirilytics.qatch.service.data.Project;
-import com.empirilytics.qatch.service.providers.LanguageProvider;
-import com.empirilytics.qatch.service.providers.ProviderLoader;
+import com.empirilytics.qatch.service.lang.LanguageProvider;
+import com.empirilytics.qatch.service.lang.providers.ProviderLoader;
 import com.google.gson.Gson;
 import io.javalin.http.Context;
 import io.javalin.plugin.openapi.annotations.HttpMethod;

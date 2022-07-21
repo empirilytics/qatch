@@ -1,7 +1,6 @@
 package com.empirilytics.qatch.service.data;
 
 import lombok.NonNull;
-import lombok.ToString;
 
 /**
  * A record representing all the information necessary to open a connection to a database using JDBC.

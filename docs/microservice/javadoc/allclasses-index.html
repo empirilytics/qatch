@@ -54,11 +54,19 @@ loadScripts(document, 'script');</script>
 <h1 title="All Classes and Interfaces" class="title">All Classes and Interfaces</h1>
 </div>
 <div id="all-classes-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="all-classes-table-tab0" role="tab" aria-selected="true" aria-controls="all-classes-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="all-classes-table-tab2" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab2', 2)" class="table-tab">Classes</button><button id="all-classes-table-tab4" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab4', 2)" class="table-tab">Record Classes</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="all-classes-table-tab0" role="tab" aria-selected="true" aria-controls="all-classes-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="all-classes-table-tab1" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab1', 2)" class="table-tab">Interfaces</button><button id="all-classes-table-tab2" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab2', 2)" class="table-tab">Classes</button><button id="all-classes-table-tab4" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab4', 2)" class="table-tab">Record Classes</button></div>
 <div id="all-classes-table.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="all-classes-table-tab0">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/AbstractLanguageProvider.html" title="class in com.empirilytics.qatch.service.lang.providers">AbstractLanguageProvider</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Abstract class containing the base attributes for all language providers</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/builder/AbstractProjectBuilder.html" title="class in com.empirilytics.qatch.service.lang.builder">AbstractProjectBuilder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Abstract base class for language specific project builders</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/handlers/BaseGetHandler.html" title="class in com.empirilytics.qatch.service.handlers">BaseGetHandler</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Abstract basic Get Handler</div>
@@ -67,11 +75,44 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Abstract base POST handler</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/Config.html" title="class in com.empirilytics.qatch.service">Config</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/empirilytics/qatch/service/lang/CodeProcessor.html" title="interface in com.empirilytics.qatch.service.lang">CodeProcessor</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">A processor which correctly formats the code provided as input to the service, in order to ensure
+ that the code will build</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/Config.html" title="class in com.empirilytics.qatch.service">Config</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Class to hold and load configuration data for the Qatch Evaluation Service</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/io/DataExtractor.html" title="class in com.empirilytics.qatch.service.io">DataExtractor</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/data/Content.html" title="class in com.empirilytics.qatch.service.data">Content</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A simple object holding the data passed into the service</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/builder/CppBuilder.html" title="class in com.empirilytics.qatch.service.lang.builder">CppBuilder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Setups the correct project structure and build system for a C++ project</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/files/CppFileBuilder.html" title="class in com.empirilytics.qatch.service.lang.files">CppFileBuilder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Correctly constructs compilable C++ code from the files provided the service</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/CppProvider.html" title="class in com.empirilytics.qatch.service.lang.providers">CppProvider</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A language provider for the C++ language</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/builder/CSharpBuilder.html" title="class in com.empirilytics.qatch.service.lang.builder">CSharpBuilder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">CSharp Language specific project builder</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/files/CSharpFileBuilder.html" title="class in com.empirilytics.qatch.service.lang.files">CSharpFileBuilder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Constructs the file system from the input of the service</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/CSharpProvider.html" title="class in com.empirilytics.qatch.service.lang.providers">CSharpProvider</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A Language Provider for the C# Languages</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/eval/DataExtractor.html" title="class in com.empirilytics.qatch.service.eval">DataExtractor</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A Simple class to extract the pertinent quality results from a Qatch analysis results file.</div>
 </div>
@@ -87,7 +128,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab4">
 <div class="block">Data class for containing information related to an ErrorResponse when processing calls for the Api documentation</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/EvalRunner.html" title="class in com.empirilytics.qatch.service">EvalRunner</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/eval/EvalRunner.html" title="class in com.empirilytics.qatch.service.eval">EvalRunner</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Tool to execute the Qatch Evaluation Runner for a given project</div>
 </div>
@@ -99,33 +140,78 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A Handler for the endpoint which returns the status/results of a given evaluation</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/java/ExecJavaCompiler.html" title="class in com.empirilytics.qatch.service.compilers">ExecJavaCompiler</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/FileBuilder.html" title="class in com.empirilytics.qatch.service.lang">FileBuilder</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Provides the logic used to reconstruct the files of a particular submission.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/builder/JavaBuilder.html" title="class in com.empirilytics.qatch.service.lang.builder">JavaBuilder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Tool to select and execute a java compilation process (using either the javac, maven, or gradle
  tools) to ensure that Java analysis tools can be executed on the project</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/io/FileBuilder.html" title="class in com.empirilytics.qatch.service.io">FileBuilder</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/files/JavaFileBuilder.html" title="class in com.empirilytics.qatch.service.lang.files">JavaFileBuilder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Correctly reconstructs Java Files that are passed to the service</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/JavaProvider.html" title="class in com.empirilytics.qatch.service.lang.providers">JavaProvider</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Provides the logic used to reconstruct the files of a particular submission.</div>
+<div class="block">Language provider for the Java language</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/builder/JsBuilder.html" title="class in com.empirilytics.qatch.service.lang.builder">JsBuilder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A JavaScript language specific project builder</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/files/JsFileBuilder.html" title="class in com.empirilytics.qatch.service.lang.files">JsFileBuilder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Constructs interprettable source code from the input to the service</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/JsProvider.html" title="class in com.empirilytics.qatch.service.lang.providers">JsProvider</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Language provider for the JavaScript language</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/empirilytics/qatch/service/lang/LanguageProvider.html" title="interface in com.empirilytics.qatch.service.lang">LanguageProvider</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Interface defining the contract for all Language providers</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/data/Project.html" title="class in com.empirilytics.qatch.service.data">Project</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Model object representing a project to be analyzed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/QatchService.html" title="class in com.empirilytics.qatch.service">QatchService</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/empirilytics/qatch/service/lang/ProjectBuilder.html" title="interface in com.empirilytics.qatch.service.lang">ProjectBuilder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Interface defining the basic components of a system for the management of a project build prior
+ to analysis</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/ProviderLoader.html" title="class in com.empirilytics.qatch.service.lang.providers">ProviderLoader</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Class to load language providers as needed based on the language name</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/builder/PythonBuilder.html" title="class in com.empirilytics.qatch.service.lang.builder">PythonBuilder</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A Python language specific project builder</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/files/PythonFileBuilder.html" title="class in com.empirilytics.qatch.service.lang.files">PythonFileBuilder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Constructs the file system from the input of the service</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/lang/providers/PythonProvider.html" title="class in com.empirilytics.qatch.service.lang.providers">PythonProvider</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Language provider for the python language (both version 2.7 and 3)</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/QatchService.html" title="class in com.empirilytics.qatch.service">QatchService</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Main class which sets up and executes the Qatch Service</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/data/Results.html" title="class in com.empirilytics.qatch.service.data">Results</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/data/Results.html" title="class in com.empirilytics.qatch.service.data">Results</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A model object representing the results of a quality analysis</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/ServerContext.html" title="class in com.empirilytics.qatch.service">ServerContext</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/ServerContext.html" title="class in com.empirilytics.qatch.service">ServerContext</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A single point of data control for use across the service.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/handlers/StatusHandler.html" title="class in com.empirilytics.qatch.service.handlers">StatusHandler</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/empirilytics/qatch/service/handlers/StatusHandler.html" title="class in com.empirilytics.qatch.service.handlers">StatusHandler</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A Basic Service Status (heartbeat) call.</div>
 </div>
 </div>

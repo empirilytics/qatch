@@ -1,33 +1,43 @@
-# qatch
+# QATCH
 
-This is a fork and re-envisioning of the QATCH Quality Modeling Framework found at [https://github.com/AuthEceSoftEng/qatch](AuthEceSoftEng/qatch)
+This is a fork and re-envisioning of the QATCH Quality Modeling Framework found
+at [https://github.com/AuthEceSoftEng/qatch](AuthEceSoftEng/qatch)
 
-The goal of this new project is to provide a means to evaluate the quality of the code a candidate submits during the interview and evaluation period for a software engineering position.
+The goal of this new project is to provide a means to evaluate the quality of a software project.
 
-# Table Of Contents
+### The Modules
 
-# Installing
+This project has been refactored into multiple modules:
 
-# Usage
+* Core ([git](https://github.com/empirilytics/qatch/core))
+* App ([git](https://github.com/empirilytics/qatch/app))
+  * CLI ([git](https://github.com/empirilytics/qatch/app/cli))
+  * GUI ([git](https://github.com/empirilytics/qatch/app/gui))
+* Anlyzers ([git](https://github.com/empirilytics/qatch/analyzers))
+* Calibration ([git](https://github.com/empirilytics/qatch/calibration))
+* MicroService ([git](https://github.com/empirilytics/qatch/microservice))
+* ActiveJDBC Gradle Plugin ([git](https://github.com/empirilytics/qatch/activejdbc))
+* buildSrc ([git](https://github.com/empirilytics/qatch/buildSrc))
 
-# Testing
+Others (not currently in development):
 
-# Credits
+* IntegrationTesting ([git](https://github.com/empirilytics/qatch/it))
+* WebApp ([git](https://github.com/empirilytics/qatch/webapp))
+* WebService(old) ([git](https://github.com/empirilytics/qatch/webservice_old))
 
-# License
+### License
 
-The original code is copyright (c) 2017 under the MIT License to ISSEL Soft Eng Team, while all new code is copyright (c) 2022 under the MIT License to Empirilytics.
+The original code is copyright (c) 2017 under the MIT License to ISSEL Soft Eng Team, while all new code is copyright (
+c) 2022 under the MIT License to Empirilytics.
 
-# Contributing
+### Contributing
 
-# Authors and Acknowledgement
+See the individual modules for more information on contributing
 
-# qatch
+### Authors and Acknowledgement
 
-The repository contains the following directories:
-
- - *Offline Tools*: It contains the source code of the offline tools that are used by the framework for the derivation of custom quality models and for the evaluation of software products.
-
- - *Rules, Models, Descriptions*: It contains all the files required for the operation of the overall framework.
-
- - *Web Service*: It contains the source code of the web application used for the evaluation of Github projects.
+* **Isaac D. Griffith, Ph.D.** - Drastically reformatted the project into multiple modules and refactored several key
+  areas for performance efficiency, maintainability, style, etc. However more work must be done. Is in the process of
+  expanding the capabilities of this approach to be aligned with the needs of industry.
+* **Miltiadis G. Siavvas, Ph.D.** - Developed the QATCH approach during their dissertation work. However, has not worked
+  on it since
