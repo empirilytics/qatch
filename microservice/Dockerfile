@@ -26,6 +26,7 @@ RUN microdnf install zip unzip -y
 # Setup Maven Home and Gradle Home
 
 # install the components
+# Need to install pylint, and enchant
 RUN unzip qservice-2.0.0.zip
 RUN mv qservice-2.0.0 qservice
 RUN mkdir qservice/conf
