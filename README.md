@@ -9,21 +9,21 @@ The goal of this new project is to provide a means to evaluate the quality of a 
 
 This project has been refactored into multiple modules:
 
-* Core ([git](https://github.com/empirilytics/qatch/core))
-* App ([git](https://github.com/empirilytics/qatch/app))
-  * CLI ([git](https://github.com/empirilytics/qatch/app/cli))
-  * GUI ([git](https://github.com/empirilytics/qatch/app/gui))
-* Anlyzers ([git](https://github.com/empirilytics/qatch/analyzers))
-* Calibration ([git](https://github.com/empirilytics/qatch/calibration))
-* MicroService ([git](https://github.com/empirilytics/qatch/microservice))
-* ActiveJDBC Gradle Plugin ([git](https://github.com/empirilytics/qatch/activejdbc))
-* buildSrc ([git](https://github.com/empirilytics/qatch/buildSrc))
+* Core ([git](https://github.com/empirilytics/qatch/tree/master/core))
+* App ([git](https://github.com/empirilytics/qatch/tree/master/app))
+  * CLI ([git](https://github.com/empirilytics/qatch/tree/master/app/cli))
+  * GUI ([git](https://github.com/empirilytics/qatch/tree/master/app/gui))
+* Anlyzers ([git](https://github.com/empirilytics/qatch/tree/master/analyzers))
+* Calibration ([git](https://github.com/empirilytics/qatch/tree/master/calibration))
+* MicroService ([git](https://github.com/empirilytics/qatch/tree/master/microservice))
+* ActiveJDBC Gradle Plugin ([git](https://github.com/empirilytics/qatch/tree/master/activejdbc))
+* buildSrc ([git](https://github.com/empirilytics/qatch/tree/master/buildSrc))
 
 Others (not currently in development):
 
-* IntegrationTesting ([git](https://github.com/empirilytics/qatch/it))
-* WebApp ([git](https://github.com/empirilytics/qatch/webapp))
-* WebService(old) ([git](https://github.com/empirilytics/qatch/webservice_old))
+* IntegrationTesting ([git](https://github.com/empirilytics/qatch/tree/master/it))
+* WebApp ([git](https://github.com/empirilytics/qatch/tree/master/webapp))
+* WebService(old) ([git](https://github.com/empirilytics/qatch/tree/master/webservice_old))
 
 ### License
 
