@@ -1,10 +1,12 @@
 package com.empirilytics.qatch.calibration.stats;
 
-import com.empirilytics.qatch.calibration.BenchmarkProjects;
+import com.empirilytics.qatch.core.eval.Project;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -22,7 +24,7 @@ class ThresholdGeneratorTest {
   @Test
   void testGetPropertyNames() {
     // Setup
-    final BenchmarkProjects projects = new BenchmarkProjects();
+    final List<Project> projects = Lists.newArrayList();
 
     // Run the test
     final String[] result = thresholdGeneratorUnderTest.getPropertyNames(projects);
@@ -34,7 +36,7 @@ class ThresholdGeneratorTest {
   @Test
   void testGetProjectMeasures() {
     // Setup
-    final BenchmarkProjects projects = new BenchmarkProjects();
+    final List<Project> projects = Lists.newArrayList();
     final double[][] expectedResult = new double[][] {{0.0}};
 
     // Run the test
@@ -47,7 +49,7 @@ class ThresholdGeneratorTest {
   @Test
   void testGenerateThresholds() {
     // Setup
-    final BenchmarkProjects projects = new BenchmarkProjects();
+    final List<Project> projects = Lists.newArrayList();
     final Map<String, Triple<Double, Double, Double>> expectedResult =
         Map.ofEntries(Map.entry("value", Triple.of(0.0, 0.0, 0.0)));
 

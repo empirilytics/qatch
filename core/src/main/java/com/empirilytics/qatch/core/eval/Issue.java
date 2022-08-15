@@ -5,7 +5,7 @@ package com.empirilytics.qatch.core.eval;
  *
  * <p>Typically, it represents a &lt;violation&gt; entry of a PMD result XML file.
  *
- * @author Miltos, Isaac Griffith
+ * @author Isaac Griffith
  * @version 2.0.0
  *
  * @param ruleName Name of the rule which produces this issue

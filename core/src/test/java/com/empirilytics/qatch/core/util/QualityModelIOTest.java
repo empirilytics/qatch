@@ -59,28 +59,6 @@ class QualityModelIOTest {
         text);
   }
 
-  @ParameterizedTest
-  @ValueSource(
-      strings = {
-        //"test_data/filename_unwritable.xml",
-        "test_data/unwritable/filename.xml",
-        "test_data/"
-      })
-  void testExportModel_ThrowsIllegalArgumentException(String path) {
-    // Setup
-    final CharacteristicSet characteristicSet = new CharacteristicSet();
-    final Weights weights = new Weights();
-    characteristicSet.setCharacteristics(
-        List.of(new Characteristic("name", "standard", "description", weights)));
-    final Weights weights1 = new Weights();
-    final QualityModel qm =
-        new QualityModel("name", new PropertySet(), characteristicSet, new Tqi(weights1));
-
-    // Run the test
-    assertThrows(
-        IllegalArgumentException.class, () -> QualityModelIO.exportModel(qm, Paths.get(path)));
-  }
-
   @Test
   void testImportModel() {
     // Setup

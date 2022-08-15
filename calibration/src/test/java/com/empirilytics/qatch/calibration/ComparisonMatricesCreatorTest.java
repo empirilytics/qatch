@@ -41,7 +41,7 @@ class ComparisonMatricesCreatorTest {
   }
 
   @Test
-  void testGenerateCharacteristicsCompMatricies() {
+  void testGenerateCharacteristicsCompMatrices() {
     // Setup
     final CharacteristicSet characteristics = new CharacteristicSet();
     final Weights weights = new Weights();
@@ -51,7 +51,7 @@ class ComparisonMatricesCreatorTest {
     final PropertySet properties = new PropertySet();
 
     // Run the test
-    ComparisonMatricesCreator.generateCharacteristicsCompMatricies(characteristics, properties);
+    ComparisonMatricesCreator.generateCharacteristicsCompMatrices(characteristics, properties);
 
     // Verify the results
   }

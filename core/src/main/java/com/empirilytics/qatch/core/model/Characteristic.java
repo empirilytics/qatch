@@ -2,7 +2,6 @@ package com.empirilytics.qatch.core.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

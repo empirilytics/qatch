@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.security.NoTypePermission;
 import com.thoughtworks.xstream.security.NullPermission;
 import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +27,7 @@ import java.util.Collection;
  * @author Isaac Griffith
  * @version 2.0.0
  */
+@Log4j2
 public class QualityModelIO {
 
   /**
@@ -35,19 +37,12 @@ public class QualityModelIO {
    * @param path The path to export to, cannot be null
    * @throws IllegalArgumentException if the provided path is unreadable or a directory
    */
-  public static void exportModel(@NonNull QualityModel qm, @NonNull Path path)
-      throws IllegalArgumentException {
-    if (Files.exists(path) && !Files.isWritable(path))
-      throw new IllegalArgumentException("path must be writable");
-    if (Files.exists(path) && !Files.isRegularFile(path))
-      throw new IllegalArgumentException("path must be a regular file");
-    if (!Files.exists(path) && !Files.isWritable(path))
-      throw new IllegalArgumentException("path must be writable");
+  public static void exportModel(@NonNull QualityModel qm, @NonNull Path path) {
     try {
       Files.deleteIfExists(path);
       Files.createFile(path);
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.error(ex.getMessage());
     }
 
     XStream xstream = setupXStream();
@@ -56,7 +51,7 @@ public class QualityModelIO {
       out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
       xstream.marshal(qm, new PrettyPrintWriter(out));
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.error(ex.getMessage());
     }
   }
 
@@ -81,7 +76,7 @@ public class QualityModelIO {
     try (Reader reader = Files.newBufferedReader(path)) {
       model = (QualityModel) xstream.fromXML(reader);
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.error(ex.getMessage());
     }
 
     return model;

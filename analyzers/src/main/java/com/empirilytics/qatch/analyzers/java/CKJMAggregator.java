@@ -78,7 +78,7 @@ public class CKJMAggregator implements Aggregator {
       project.setPropertyMeasureNormalizer(property, totalLoc);
 
       //Check if this property is quantified by the CKJM tool
-      if(property.getMeasure().getTool().equalsIgnoreCase("ckjm")){
+      if(property.getMeasure().getTool().equalsIgnoreCase("ckjm")) {
         Metric measure = (Metric) property.getMeasure();
 
         // Get the index of the metr array that corresponds to this metric

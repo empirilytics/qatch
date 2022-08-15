@@ -1,5 +1,6 @@
 package com.empirilytics.qatch.calibration;
 
+import com.empirilytics.qatch.analyzers.LanguageProvider;
 import com.empirilytics.qatch.core.model.PropertySet;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
@@ -21,32 +22,20 @@ class OptimalParallelBenchmarkAnalyzerTest {
 
   private OptimalParallelBenchmarkAnalyzer optimalParallelBenchmarkAnalyzerUnderTest;
 
+  private LanguageProvider provider;
+
   private AutoCloseable mockitoCloseable;
 
   @BeforeEach
   void setUp() {
     mockitoCloseable = openMocks(this);
     optimalParallelBenchmarkAnalyzerUnderTest =
-        new OptimalParallelBenchmarkAnalyzer("benchRepoPath", "resultsPath", mockProperties);
+        new OptimalParallelBenchmarkAnalyzer("benchRepoPath", "resultsPath", mockProperties, provider);
   }
 
   @AfterEach
   void tearDown() throws Exception {
     mockitoCloseable.close();
-  }
-
-  @Test
-  void testSetGUIObjects() {
-    // Setup
-    final Vector<ProgressBar> progBars = new Vector(List.of(new ProgressBar(0.0)));
-    final Vector<ProgressIndicator> progIndicators =
-        new Vector(List.of(new ProgressIndicator(0.0)));
-    final TextArea console = new TextArea("text");
-
-    // Run the test
-    optimalParallelBenchmarkAnalyzerUnderTest.setGUIObjects(progBars, progIndicators, console);
-
-    // Verify the results
   }
 
   @Test
@@ -57,26 +46,6 @@ class OptimalParallelBenchmarkAnalyzerTest {
 
     // Run the test
     optimalParallelBenchmarkAnalyzerUnderTest.analyzeBenchmarkRepo();
-
-    // Verify the results
-  }
-
-  @Test
-  void testPmdThreadCreator() {
-    // Setup
-    final PropertySet pmdPropSet = new PropertySet();
-
-    // Run the test
-    optimalParallelBenchmarkAnalyzerUnderTest.pmdThreadCreator(pmdPropSet, 0, 0);
-
-    // Verify the results
-  }
-
-  @Test
-  void testPrintBenchmarkRepoContents() {
-    // Setup
-    // Run the test
-    optimalParallelBenchmarkAnalyzerUnderTest.printBenchmarkRepoContents();
 
     // Verify the results
   }

@@ -2,5 +2,5 @@ com.empirilytics.qatch.analyzers
 com.empirilytics.qatch.analyzers.cpp
 com.empirilytics.qatch.analyzers.csharp
 com.empirilytics.qatch.analyzers.java
-com.empirilytics.qatch.analyzers.javascript
+com.empirilytics.qatch.analyzers.js
 com.empirilytics.qatch.analyzers.python

@@ -66,7 +66,7 @@ public class ComparisonMatricesCreator {
     generateTQICompMatrix(characteristics);
 
     // Generate Comparison Matrices for the Characteristics of the quality model
-    generateCharacteristicsCompMatricies(characteristics, properties);
+    generateCharacteristicsCompMatrices(characteristics, properties);
   }
 
   /**
@@ -133,7 +133,7 @@ public class ComparisonMatricesCreator {
    * @param characteristics Characteristics to generate for, cannot be null
    * @param properties Properties to generate for, cannot be null
    */
-  public static void generateCharacteristicsCompMatricies(
+  public static void generateCharacteristicsCompMatrices(
       @NonNull CharacteristicSet characteristics, @NonNull PropertySet properties) {
 
     // For each characteristic do...

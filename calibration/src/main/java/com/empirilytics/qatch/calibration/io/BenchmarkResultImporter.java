@@ -1,15 +1,19 @@
 package com.empirilytics.qatch.calibration.io;
 
 import com.empirilytics.qatch.analyzers.IssuesImporter;
+import com.empirilytics.qatch.analyzers.LanguageProvider;
 import com.empirilytics.qatch.analyzers.MetricsImporter;
-import com.empirilytics.qatch.analyzers.java.CKJMResultsImporter;
-import com.empirilytics.qatch.analyzers.java.PMDResultsImporter;
-import com.empirilytics.qatch.calibration.BenchmarkProjects;
 import com.empirilytics.qatch.core.eval.Project;
+import com.empirilytics.qatch.core.model.QualityModel;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * This class is responsible for importing all the results that the BenchmarkAnalyzer exported in
@@ -21,7 +25,7 @@ import java.io.File;
  * object 4. It returns an object of type BenchmarkProjects. This object is simply a Vector of
  * Project objects containing the imported project results.
  *
- * @author Miltos, Isaac Griffith
+ * @author Isaac Griffith
  * @version 2.0.0
  */
 @Log4j2
@@ -32,57 +36,34 @@ public class BenchmarkResultImporter {
    *
    * @param path The path from which to import results, cannot be null
    */
-  public BenchmarkProjects importResults(@NonNull String path) {
-    // Create an empty BenchmarkProject object
-    BenchmarkProjects projects = new BenchmarkProjects();
+  public void importResults(@NonNull List<Project> projects, @NonNull String path, LanguageProvider provider, QualityModel model) {
+    IssuesImporter issuesImporter = provider.getIssuesImporter();
+    MetricsImporter metricsImporter = provider.getMetricsImporter();
 
-    // Create a simple PMD and CKJM Result Importers
-    IssuesImporter pmdImporter = new PMDResultsImporter();
-    MetricsImporter ckjmImporter = new CKJMResultsImporter();
-
-    // Create a file that represents the results directory
     log.info("Analysis Path : " + path);
-    File resultsDir = new File(path);
+    Path resultsDir = Paths.get(path).toAbsolutePath().normalize();
 
-    // Get a list of the folders that are places inside the result directory
-    File[] projectDirs = resultsDir.listFiles();
+    try (Stream<Path> stream = Files.list(resultsDir).filter(Files::isDirectory)) {
+      stream.forEach(projectDir -> {
+        Project project = new Project(projectDir.getFileName().toString(), model);
+        project.setPath(projectDir.toAbsolutePath().normalize().toString());
 
-    // Import the results
-    // For each folder found in the results folder do...
-    double progress = 0;
-    for (File projectDir : projectDirs) {
-
-      // Print the progress to the console
-      // TODO: Remove this print
-      System.out.print("* Progress : " + (int) (progress / projectDirs.length * 100) + " %\r");
-
-      // Create a new Project object and set its parent folder path
-      Project project = new Project(projectDir.getName(), null);
-      project.setPath(projectDir.getAbsolutePath());
-
-      // For each result file placed in the current folder do...
-      File[] results = projectDir.listFiles();
-
-      for (File resultFile : results) {
-        // Check if it is a ckjm result file
-        if (!resultFile.getName().contains("ckjm")) {
-          // Import the issues found in this file and add them to the Project's IssueSet vector
-          project.addIssueSet(pmdImporter.parseIssues(resultFile.getAbsolutePath()));
-        } else {
-          // Import the metrics found in the ckjm result file and store them in the Project's
-          // metrics field
-          project.setMetrics(ckjmImporter.parseMetrics(resultFile.getAbsolutePath()));
+        try (Stream<Path> contents = Files.list(projectDir)) {
+          contents.forEach(resultFile -> {
+            if (!resultFile.getFileName().toString().contains(provider.getMetricsImporter().getFileName())) {
+              project.addIssueSet(issuesImporter.parseIssues(resultFile.toAbsolutePath().normalize().toString()));
+            } else {
+              project.setMetrics(metricsImporter.parseMetrics(resultFile.toAbsolutePath().normalize().toString()));
+            }
+          });
+        } catch (IOException ex) {
+          log.error(ex.getMessage());
         }
-      }
-      // Add the project to the BenchmarkProjects object that will be returned
-      projects.addProject(project);
 
-      // Increment the progress counter
-      progress++;
+        projects.add(project);
+      });
+    } catch (IOException ex) {
+      log.error(ex.getMessage());
     }
-    System.out.print("* Progress : " + (int) (progress / projectDirs.length * 100) + " %\r");
-
-    // Return the projects
-    return projects;
   }
 }

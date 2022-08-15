@@ -320,7 +320,7 @@ class ProjectTest {
     when(model.getProperties()).thenReturn(new PropertySet());
     when(model.getInstance()).thenReturn(inst);
 
-    projectUnderTest.model = inst;
+    projectUnderTest.setModel(inst);
 
     // Run the test
     double result = projectUnderTest.evaluateProjectProperty(prop);
@@ -345,7 +345,7 @@ class ProjectTest {
     when(model.getProperties()).thenReturn(new PropertySet());
     when(model.getInstance()).thenReturn(inst);
 
-    projectUnderTest.model = inst;
+    projectUnderTest.setModel(inst);
 
     // Run the test
     double result = projectUnderTest.evaluateProjectCharacteristic(ch);

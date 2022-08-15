@@ -7,11 +7,11 @@ package com.empirilytics.qatch.core.eval;
  * represents a method and contains all its quality attributes that can be used to characterize the
  * quality of the method (e.g LOC, Cyclomatic Compexity etc.)
  *
- * @author Miltos, Isaac Griffith
+ * @author Isaac Griffith
  * @version 2.0.0
  *
  * @param methodName Name of the method
  * @param cyclComplexity Cyclomatic Complexity of the evaluated method
  * @param loc Lines of Code of the evaluated method
  */
-public record MethodLevelAttributes(String methodName, int cyclComplexity, int loc) {}
+public record MethodLevelAttributes(String methodName, double cyclComplexity, int loc) {}

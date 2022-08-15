@@ -46,28 +46,13 @@ public abstract class LanguageProvider {
   /**
    * Initializes this LanguageProvider with the given configPath and resultsPath
    *
-   * @param configPath The configuration path for the language, cannot be null or empty
-   * @param resultsPath The results path for the langauge, cannot be null or empty
+   * @param config Map of the configuration information
    */
-  public abstract void initialize(@NonNull String configPath, @NonNull String resultsPath);
+  public void initialize(Map<String, String> config) {
+    this.configPath = config.get("configPath");
+    this.resultsPath = config.get("resultsPath");
+  }
 
   /** Returns the language moniker associated with this language provider */
   public abstract String getLanguage();
-
-  /** Loads the language specific config for this provider */
-  public void loadConfig() {
-    Yaml yaml = new Yaml();
-    try (InputStream inputStream =
-        Files.newInputStream(Paths.get(configPath, "qatch." + getLanguage() + ".yml"))) {
-      config = yaml.load(inputStream);
-      String qHome = System.getenv("QATCH_HOME");
-      config.forEach((key, val) -> {
-        if (config.get(key).contains("$QATCH_HOME")) {
-          config.put(key, config.get(key).replace("$QATCH_HOME", qHome));
-        }
-      });
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
 }

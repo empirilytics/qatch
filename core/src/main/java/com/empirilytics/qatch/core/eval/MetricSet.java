@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  *
  * <p>It is the equivalent of IssueSet. However, here we pay attention on the level of the analysis.
  *
- * @author Miltos, Isaac Griffith
+ * @author Isaac Griffith
  * @version 2.0.0
  */
 public class MetricSet {

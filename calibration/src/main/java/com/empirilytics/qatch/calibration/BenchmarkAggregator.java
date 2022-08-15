@@ -1,11 +1,11 @@
 package com.empirilytics.qatch.calibration;
 
-import com.empirilytics.qatch.analyzers.java.CKJMAggregator;
-import com.empirilytics.qatch.analyzers.java.PMDAggregator;
+import com.empirilytics.qatch.analyzers.Aggregator;
+import com.empirilytics.qatch.analyzers.LanguageProvider;
 import com.empirilytics.qatch.core.eval.Project;
 import com.empirilytics.qatch.core.model.PropertySet;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class is responsible for calculating the fields: normalizer, value and normValue of the
@@ -36,29 +36,18 @@ public class BenchmarkAggregator {
    * @param projects The projects to aggregate
    * @param properties The properties to be aggregated
    */
-  public BenchmarkProjects aggregateProjects(BenchmarkProjects projects, PropertySet properties) {
+  public List<Project> aggregateProjects(List<Project> projects, PropertySet properties, LanguageProvider provider) {
 
-    // Clone the properties of the Quality Model on each project
-    // cloneProperties(projects, properties); TODO Remove this as we shifted to Model Instances
+    Aggregator issuesAggregator = provider.getIssuesAggregator();
+    Aggregator metricsAggregator = provider.getMetricsAggregator();
 
-    // Create an empty PMDAggregator and CKJMAggregator
-    PMDAggregator pmd = new PMDAggregator();
-    CKJMAggregator ckjm = new CKJMAggregator();
+    projects.forEach(project -> {
+      issuesAggregator.aggregate(project);
+      metricsAggregator.aggregate(project);
+    });
 
-    // Aggregate all the projects
-    double progress = 0;
-    for (int i = 0; i < projects.size(); i++) {
-      System.out.print("* Progress : " + (int) (progress / projects.size() * 100) + " %\r");
-      pmd.aggregate(projects.getProject(i));
-      ckjm.aggregate(projects.getProject(i));
-      progress++;
-    }
-    System.out.print("* Progress : " + (int) (progress / projects.size() * 100) + " %\r");
-
-    // Normalize all the values
     normalizeProperties(projects);
 
-    // Optional
     return projects;
   }
 
@@ -68,18 +57,7 @@ public class BenchmarkAggregator {
    *
    * @param projects The projects for which properties should be normalized
    */
-  public void normalizeProperties(BenchmarkProjects projects) {
-
-    // Iterate through all the projects
-    Iterator<Project> iterator = projects.iterator();
-
-    while (iterator.hasNext()) {
-
-      // Get the current project
-      Project project = iterator.next();
-
-      // For each property do...
-      project.normalizeMeasures();
-    }
+  public void normalizeProperties(List<Project> projects) {
+    projects.forEach(Project::normalizeMeasures);
   }
 }

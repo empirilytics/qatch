@@ -26,7 +26,7 @@ public class Project {
   @Getter @Setter private String path;
   @Getter @Setter private List<IssueSet> issues;
   @Getter @Setter private MetricSet metrics;
-  QualityModelInstance model;
+  @Getter @Setter private QualityModelInstance model;
 
   /**
    * The constructor methods of this class.

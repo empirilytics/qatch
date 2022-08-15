@@ -273,7 +273,7 @@ public class QualityModelInstance {
   }
 
   /**
-   * Retrives the measure value for the given property
+   * Retrieves the measure value for the given property
    *
    * @param property The property, cannot be null
    * @return The value of that property, or 0 if the property is not known

@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * Equivalent to issues. Representation of CKJM results in the java program.

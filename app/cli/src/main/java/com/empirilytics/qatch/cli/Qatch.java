@@ -2,10 +2,6 @@ package com.empirilytics.qatch.cli;
 
 import lombok.extern.log4j.Log4j2;
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Help.Ansi.Style;
-import picocli.CommandLine.Help.ColorScheme;
-import picocli.CommandLine.Option;
 
 /**
  * Main entry point class for the Qatch Evaluation System
@@ -29,23 +25,25 @@ public class Qatch {
   public static void main(String[] args) {
     QatchContext context = new QatchContext();
     CommandLine cmdLine = new CommandLine(context);
-    context.setCommandLine(cmdLine);
-    cmdLine.execute(args);
+    CommandLine.populateCommand(context, args);
 
     if (context.isHelpRequested() || context.isVersionRequested()) {
       if (context.isHelpRequested())
-        context.displayHelp("");
+        CommandLine.usage(context, System.out);
       if (context.isVersionRequested())
         cmdLine.printVersionHelp(System.out);
       System.exit(0);
     }
 
+    context.run();
+
     Qatch qatch = new Qatch();
-    qatch.run(context);
+    qatch.exec(context);
   }
 
-  public void run(QatchContext context) {
-    System.out.println(ANSI_BLUE + "                       ____        __       __" + ANSI_RESET + "\n" +
+  public void exec(QatchContext context) {
+    System.out.println(
+            ANSI_BLUE + "                       ____        __       __" + ANSI_RESET + "\n" +
             ANSI_BLUE + "                      / __ \\____ _/ /______/ /_" + ANSI_RESET + "\n" +
             ANSI_BLUE + "                     / / / / __ `/ __/ ___/ __ \\" + ANSI_RESET + "\n" +
             ANSI_BLUE + "                    / /_/ / /_/ / /_/ /__/ / / /" + ANSI_RESET + "\n" +

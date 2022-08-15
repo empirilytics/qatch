@@ -3,17 +3,21 @@ package com.empirilytics.qatch.cli;
 import com.empirilytics.qatch.calibration.*;
 import com.empirilytics.qatch.calibration.io.*;
 import com.empirilytics.qatch.calibration.stats.ThresholdGenerator;
+import com.empirilytics.qatch.core.eval.Project;
 import com.empirilytics.qatch.core.model.CharacteristicSet;
 import com.empirilytics.qatch.core.model.PropertySet;
 import com.empirilytics.qatch.core.model.QualityModel;
 import com.empirilytics.qatch.core.model.Tqi;
 import com.empirilytics.qatch.core.util.QualityModelIO;
+import com.google.common.collect.Lists;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -33,7 +37,7 @@ public class BenchmarkRunner extends Runner {
   private CharacteristicSet characteristics;
   private Tqi tqi;
 
-  private BenchmarkProjects projects = null;
+  private List<Project> projects = null;
   private final BenchmarkAnalysisExporter exporter = null;
 
   /**
@@ -86,58 +90,13 @@ public class BenchmarkRunner extends Runner {
 
     // Check and create the predefined results directory
     checkCreateClearDirectory(context.getBenchmarkResPath());
-
-    // Check what should be exported
-    if (context.isCalibration() && context.isWeightsElicitation()) {
-      QualityModelIO.exportModel(
-          qualityModel, Paths.get(context.getResPath(), context.getLanguage() + "QmModel.xml"));
-      QualityModelIO.exportModel(
-          qualityModel,
-          Paths.get(context.getBenchmarkResPath(), context.getLanguage() + "QmModel.xml"));
-    } else if (context.isCalibration()) {
-
-      // Export the properties to XML and JSON format to the predefined directory
-      PropertiesExporter propertiesExp = new PropertiesExporter();
-      propertiesExp.exportToXML(
-          properties,
-          Paths.get(context.getBenchmarkResPath(), "properties.xml").toAbsolutePath().toString());
-      propertiesExp.exportToJSON(
-          properties,
-          Paths.get(context.getBenchmarkResPath(), "properties.json").toAbsolutePath().toString());
-
-      // Export the properties to XML and JSON format to the user defined directory
-      propertiesExp.exportToXML(
-          properties, new File(context.getResPath() + "/properties.xml").getAbsolutePath());
-      propertiesExp.exportToJSON(
-          properties, new File(context.getResPath() + "/properties.json").getAbsolutePath());
-
-      // TODO: Remove this ...
-      exporter.exportToJSON(
-          projects, new File(context.getResPath() + "/projects.json").getAbsolutePath());
-
-    } else if (context.isWeightsElicitation()) {
-
-      // Export the quality model's characteristics
-      CharacteristicsExporter charExporter = new CharacteristicsExporter();
-      charExporter.exportToXML(
-          characteristics,
-          Paths.get(context.getResPath(), "characteristics.xml").toAbsolutePath().toString());
-      charExporter.exportToXML(
-          characteristics,
-          Paths.get(context.getBenchmarkResPath(), "characteristics.xml")
-              .toAbsolutePath()
-              .toString());
-
-      // Export the quality model's TQI object
-      TqiExporter tqiExp = new TqiExporter();
-      tqiExp.exportToXML(
-          tqi, Paths.get(context.getResPath(), "tqi.xml").toAbsolutePath().toString());
-      tqiExp.exportToXML(
-          tqi, Paths.get(context.getBenchmarkResPath(), "tqi.xml").toAbsolutePath().toString());
-
-    } else {
-      log.info("Something went wrong!! Nothing to export");
-    }
+    Path path = Paths.get(context.getResPath(), context.getLanguage() + "QmModel.xml").toAbsolutePath().normalize();
+    QualityModelIO.exportModel(
+            qualityModel, path);
+    path = Paths.get(context.getBenchmarkResPath(), context.getLanguage() + "QmModel.xml").toAbsolutePath().normalize();
+    QualityModelIO.exportModel(
+            qualityModel,
+            path);
 
     log.info("* Results successfully exported..!");
     log.info("*");
@@ -184,7 +143,7 @@ public class BenchmarkRunner extends Runner {
               + new File(ComparisonMatricesCreator.COMP_MATRICES).getAbsolutePath());
       System.out.println("*");
       System.out.println(
-          "* Please fulfill each cell of the comparison matricies with one of the following linguistic\n* variables:  Very Low, Low, Moderate, High, Very High");
+          "* Please fulfill each cell of the comparison matrices with one of the following linguistic\n* variables:  Very Low, Low, Moderate, High, Very High");
       System.out.println("*");
       System.out.println(
           "* If you wish you can define how sure you are for your choice by providing one of the letters:\n* U, D, C next to your judgement, seperated by comma (U: Uncertain, D: Default, C: Certain)");
@@ -274,7 +233,7 @@ public class BenchmarkRunner extends Runner {
 
     // Create an empty BenchmarkAggregator and aggregate the metrics of the project
     BenchmarkAggregator benchAggregator = new BenchmarkAggregator();
-    benchAggregator.aggregateProjects(projects, properties);
+    benchAggregator.aggregateProjects(projects, properties, context.getCurrentProvider());
 
     log.info("*");
     log.info("* Aggregation process finished..!");
@@ -306,8 +265,9 @@ public class BenchmarkRunner extends Runner {
     BenchmarkResultImporter benchmarkImporter = new BenchmarkResultImporter();
 
     // Start importing the project results
-    projects = new BenchmarkProjects();
-    projects = benchmarkImporter.importResults(context.getBenchmarkResPath());
+    projects = Lists.newArrayList();
+    benchmarkImporter.importResults(projects, context.getResultsPath().toString(), context.getCurrentProvider(), this.qualityModel);
+    log.info("* Number of Projects: " + projects.size());
 
     // Print some informative messages to the console
     log.info("*");
@@ -337,7 +297,7 @@ public class BenchmarkRunner extends Runner {
     if (!context.isParallelAnalysis()) {
       // Instantiate the serial benchmark analyzer
       BenchmarkAnalyzer benchmarkAnal =
-          new BenchmarkAnalyzer(context.getBenchRepoPath(), context.getResultsPath(), properties);
+          new BenchmarkAnalyzer(context.getBenchRepoPath(), context.getResultsPath(), properties, context.getCurrentProvider());
 
       // Start the analysis of the benchmark repository
       benchmarkAnal.analyzeBenchmarkRepo();
@@ -345,7 +305,7 @@ public class BenchmarkRunner extends Runner {
       // Instantiate the parallel benchmark analyzer
       OptimalParallelBenchmarkAnalyzer benchmarkAnal =
           new OptimalParallelBenchmarkAnalyzer(
-              context.getBenchRepoPath(), context.getResultsPath(), properties);
+              context.getBenchRepoPath(), context.getResultsPath(), properties, context.getCurrentProvider());
 
       // Start the analysis of the workspace
       benchmarkAnal.analyzeBenchmarkRepo();

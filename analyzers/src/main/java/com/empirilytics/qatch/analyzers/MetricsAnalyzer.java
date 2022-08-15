@@ -32,4 +32,6 @@ public interface MetricsAnalyzer {
    * @param properties The properties to be evaluated, cannot be null
    */
   void analyze(@NonNull String src, @NonNull String dest, @NonNull PropertySet properties);
+
+  String getToolName();
 }

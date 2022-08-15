@@ -35,4 +35,6 @@ public interface IssuesAnalyzer {
    * @param properties The set of properties to be analyzed, cannot be null
    */
   void analyze(@NonNull String src, @NonNull String dest, @NonNull PropertySet properties);
+
+  String getToolName();
 }

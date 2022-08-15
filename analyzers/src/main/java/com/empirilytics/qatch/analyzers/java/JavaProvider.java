@@ -4,6 +4,8 @@ import com.empirilytics.qatch.analyzers.LanguageProvider;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 /**
  * Language provider for the Java programming Language Currently it utilize PMD for issues and
  * CKJM-ext for metrics
@@ -35,10 +37,8 @@ public class JavaProvider extends LanguageProvider {
 
   /** {@inheritDoc} */
   @Override
-  public void initialize(@NonNull String configPath, @NonNull String resultsPath) {
-    this.configPath = configPath;
-    this.resultsPath = resultsPath;
-    loadConfig();
+  public void initialize(@NonNull Map<String, String> config) {
+    super.initialize(config);
 
     issuesAnalyzer = new PMDAnalyzer(config.get("pmdPath"), resultsPath, config.get("ruleSetPath"));
     metricsAnalyzer = new CKJMAnalyzer(config.get("ckjmPath"), resultsPath);

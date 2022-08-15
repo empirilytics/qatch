@@ -26,6 +26,7 @@ public class PolyglotEvaluator {
 
     /**
      * Evaluates a project using the universal quality model on the given path
+     *
      * @param project Project to be evaluated, cannot be null
      * @param universalQmPath Path to univeral quality model, cannot be null
      * @return An instance of the Universal Quality model with the appropriate evaluation values

@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * Class which maintains the configuration context for the entire Qatch Evaluation system.
- * Additionally it also provides the necessary logic for loading and maintaining the current
+ * Additionally, it also provides the necessary logic for loading and maintaining the current
  * Language Provider
  *
  * @author Isaac Griffith
@@ -45,7 +45,7 @@ import java.util.Map;
     helpCommand = false,
     mixinStandardHelpOptions = false)
 @Log4j2
-public class QatchContext implements Runnable {
+public class QatchContext {
 
   @Option(
       names = {"-h", "--help"},
@@ -90,11 +90,10 @@ public class QatchContext implements Runnable {
   private boolean useBenchmarksResultDir = false;
 
   @Option(
-      names = {"-r", "results"},
+      names = {"-r", "--results"},
       paramLabel = "PATH",
       description = "Path to the analysis results directory",
       required = true)
-  @Getter
   @Setter
   private String analysisResPath = null;
 
@@ -103,7 +102,6 @@ public class QatchContext implements Runnable {
       paramLabel = "PATH",
       description = "Path to the workspace",
       required = true)
-  @Getter
   @Setter
   private String workspacePath = null;
 
@@ -111,7 +109,6 @@ public class QatchContext implements Runnable {
       names = {"-q", "--quality-model"},
       paramLabel = "PATH",
       description = "Path to the quality model to be used.")
-  @Getter
   @Setter
   private String qmPath = null;
 
@@ -120,7 +117,6 @@ public class QatchContext implements Runnable {
       paramLabel = "PATH",
       description = "Path to the output results directory",
       required = true)
-  @Getter
   @Setter
   private String resPath = null;
 
@@ -171,23 +167,20 @@ public class QatchContext implements Runnable {
   private boolean usePriorAnalysis = false;
 
   @Option(
-      names = {"-n", "bench-repo"},
+      names = {"-n", "--bench-repo"},
       paramLabel = "PATH",
       description = "Path to the benchmark repo")
-  @Getter
   @Setter
   private String benchRepoPath = null;
-
-  @Getter @Setter private String configPath = null;
-  @Getter @Setter private String resultsPath = null;
-  @Getter @Setter private String modelsPath = null;
+  @Setter private String configPath = null;
+  @Setter private String resultsPath = null;
+  @Setter private String modelsPath = null;
   @Getter @Setter private LanguageProvider currentProvider;
 
   @Option(
       names = {"-x", "--bench-res-path"},
       paramLabel = "PATH",
       description = "Path to the benchmark results")
-  @Getter
   @Setter
   private String benchmarkResPath = null;
 
@@ -199,8 +192,8 @@ public class QatchContext implements Runnable {
   boolean versionRequested = false;
 
   private Map<String, LanguageProvider> providers;
-  private final List<String> languages = ImmutableList.of("java");
-  @Setter private CommandLine commandLine;
+  private final List<String> languages = ImmutableList.of("java", "python", "cs-python");
+  private Map<String, Map<String, String>> toolsConfig;
 
   /** Reads the configuration information from the conf directory */
   public void readConfig() {
@@ -213,10 +206,12 @@ public class QatchContext implements Runnable {
       resultsPath =
           ((String) obj.get("ResultsPath")).replace("$QATCH_HOME", System.getenv("QATCH_HOME"));
       modelsPath = ((String) obj.get("Models")).replace("$QATCH_HOME", System.getenv("QATCH_HOME"));
-      List<String> providerList = (List<String>) obj.get("Providers");
+      List<Map<String, String>> providerList = (List<Map<String, String>>) obj.get("Providers");
+      toolsConfig = (Map<String, Map<String, String>>) obj.get("Tools");
       loadProviders(providerList);
     } catch (Exception ex) {
       log.error(ex.getMessage());
+      ex.printStackTrace();
     }
   }
 
@@ -224,27 +219,39 @@ public class QatchContext implements Runnable {
    * Loads the language provides from the list of strings, where each element in the list is a fully
    * specified class name of a language provider
    *
-   * @param list List of language provider class names, cannot be null
+   * @param list List of Maps of language provider class names, cannot be null
    */
-  public void loadProviders(@NonNull List<String> list) {
+  public void loadProviders(@NonNull List<Map<String, String>> list) {
     providers = Maps.newHashMap();
-    for (String item : list) {
-      try {
-        Class<? extends LanguageProvider> cls =
-            (Class<? extends LanguageProvider>) Class.forName(item);
-        Method method = cls.getDeclaredMethod("instance");
-        LanguageProvider provider = (LanguageProvider) method.invoke(null);
-        providers.put(provider.getLanguage(), provider);
-      } catch (Exception ex) {
-        log.error(ex.getMessage());
-      }
+    for (Map<String, String> map : list) {
+      map.forEach((key, value) -> {
+        log.info(String.format("Loading Language Provider: (%s) -> (%s)", key, value));
+        try {
+          Class<? extends LanguageProvider> cls =
+            (Class<? extends LanguageProvider>) Class.forName(value);
+          Method method = cls.getDeclaredMethod("instance");
+          LanguageProvider provider = (LanguageProvider) method.invoke(null);
+          providers.put(provider.getLanguage(), provider);
+        } catch (Exception ex) {
+          log.error(ex.getMessage());
+        }
+      });
     }
   }
 
   /** Initializes the provider for the selected language */
   public void initProvider() {
     currentProvider = providers.get(language);
-    currentProvider.initialize(configPath, resPath);
+    String home = System.getenv("QATCH_HOME");
+    if (toolsConfig.get(language) != null) {
+      toolsConfig.get(language).put("resultsPath", resultsPath);
+      toolsConfig.get(language).put("configPath", configPath);
+      toolsConfig.get(language).forEach((k, v) -> {
+        if (v.contains("$QATCH_HOME"))
+          toolsConfig.get(language).put(k, v.replace("$QATCH_HOME", home));
+      });
+      currentProvider.initialize(toolsConfig.get(language));
+    }
   }
 
   public void run() {
@@ -258,6 +265,7 @@ public class QatchContext implements Runnable {
     try {
       setWorkspacePath(findPath(getWorkspacePath(), false));
       setResPath(findOrCreatePath(getResPath()));
+      setResultsPath(findOrCreatePath(getResultsPath()));
       setAnalysisResPath(findOrCreatePath(getAnalysisResPath()));
       setQmPath(findPath(getQmPath(), true));
       setBenchRepoPath(findPath(getBenchRepoPath(), false));
@@ -302,7 +310,7 @@ public class QatchContext implements Runnable {
   void displayHelp(String error) {
     if (error != null && !(error.isEmpty() || error.isBlank()))
       System.out.printf("Error: %s\n", error);
-    commandLine.usage(System.out);
+    CommandLine.usage(this, System.out);
   }
 
   /**
@@ -328,5 +336,41 @@ public class QatchContext implements Runnable {
     }
 
     return path.toString();
+  }
+
+  public String getBenchmarkResPath() {
+    return Paths.get(benchmarkResPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getBenchRepoPath() {
+    return Paths.get(benchRepoPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getConfigPath() {
+    return Paths.get(configPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getResultsPath() {
+    return Paths.get(resultsPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getModelsPath() {
+    return Paths.get(modelsPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getResPath() {
+    return Paths.get(resPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getWorkspacePath() {
+    return Paths.get(workspacePath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getAnalysisResPath() {
+    return Paths.get(analysisResPath).toAbsolutePath().normalize().toString();
+  }
+
+  public String getQmPath(){
+    return Paths.get(qmPath).toAbsolutePath().normalize().toString();
   }
 }

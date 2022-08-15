@@ -83,7 +83,7 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-loc">loc</span></code> - Lines of Code of the evaluated method</dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">MethodLevelAttributes</span>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;methodName, int&nbsp;cyclComplexity, int&nbsp;loc)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">MethodLevelAttributes</span>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;methodName, double&nbsp;cyclComplexity, int&nbsp;loc)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block">This class contains attributes that are at method level
 
@@ -101,8 +101,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int,int)" class="member-name-link">MethodLevelAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;methodName,
- int&nbsp;cyclComplexity,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,double,int)" class="member-name-link">MethodLevelAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;methodName,
+ double&nbsp;cyclComplexity,
  int&nbsp;loc)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>MethodLevelAttributes</code> record class.</div>
@@ -121,7 +121,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cyclComplexity()" class="member-name-link">cyclComplexity</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-cyclComplexity"><code>cyclComplexity</code></a> record component.</div>
@@ -169,10 +169,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,int,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,double,int)">
 <h3>MethodLevelAttributes</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MethodLevelAttributes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;methodName,
- int&nbsp;cyclComplexity,
+ double&nbsp;cyclComplexity,
  int&nbsp;loc)</span></div>
 <div class="block">Creates an instance of a <code>MethodLevelAttributes</code> record class.</div>
 <dl class="notes">
@@ -246,7 +246,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="cyclComplexity()">
 <h3>cyclComplexity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">cyclComplexity</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">cyclComplexity</span>()</div>
 <div class="block">Returns the value of the <a href="#param-cyclComplexity"><code>cyclComplexity</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>

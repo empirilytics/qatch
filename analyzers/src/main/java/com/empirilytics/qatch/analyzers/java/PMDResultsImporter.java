@@ -54,17 +54,9 @@ public class PMDResultsImporter implements IssuesImporter {
 
       // Set the property name of the IssueSet
 
-      // The OS Separator should be defined for Filename class
-      // TODO: Find a better way
-      char separator;
-      if (System.getProperty("os.name").contains("Windows")) {
-        separator = '\\';
-      } else {
-        separator = '/';
-      }
-
-      Filename propName = new Filename(path, separator, '.');
+      Filename propName = new Filename(path, File.separatorChar, '.');
       issues.setPropertyName(propName.filename());
+      System.out.println("Parsing: " + propName.filename());
 
       // Create an empty list in order to store temporary the violations of each file
       List<Element> list = null;
@@ -101,9 +93,7 @@ public class PMDResultsImporter implements IssuesImporter {
 
       tempIssues = issues;
 
-    } catch (JDOMException e) {
-      log.error(e.getMessage());
-    } catch (IOException e) {
+    } catch (JDOMException | IOException e) {
       log.error(e.getMessage());
     }
 

@@ -5,7 +5,6 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Class representing a finding type of measure which provides data from issues collected by a

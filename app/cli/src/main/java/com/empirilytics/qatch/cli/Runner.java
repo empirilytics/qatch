@@ -62,8 +62,10 @@ public abstract class Runner {
 
     Path path;
     if (context.getQmPath() != null) path = Paths.get(context.getQmPath());
-    else if (context.getModelsPath() != null)
+    else if (context.getModelsPath() != null) {
       path = Paths.get(context.getModelsPath(), context.getLanguage() + "QmModel.xml");
+      log.info("Loading Quality Model: " + path);
+    }
     else throw new RuntimeException("no model specified");
 
     // Load the desired quality model

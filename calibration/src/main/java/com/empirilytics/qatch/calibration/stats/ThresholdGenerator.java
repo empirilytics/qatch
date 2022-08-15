@@ -1,18 +1,15 @@
 package com.empirilytics.qatch.calibration.stats;
 
-import com.empirilytics.qatch.calibration.BenchmarkProjects;
 import com.empirilytics.qatch.core.eval.Project;
 import com.empirilytics.qatch.core.model.Property;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.NonNull;
 import org.apache.commons.lang3.tuple.Triple;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 
 /**
  * This class generates the thresholds for each measure in the model (it is a replacement of an
@@ -29,10 +26,11 @@ public class ThresholdGenerator {
    * @param projects Set of benchmark projects, cannot be null
    * @return Array of property names of the benchmark projects
    */
-  public String[] getPropertyNames(@NonNull BenchmarkProjects projects) {
-    Project proj = projects.getProject(0);
+  public String[] getPropertyNames(@NonNull List<Project> projects) {
+    Project proj = projects.get(0);
     List<String> names = Lists.newArrayList();
     proj.getProperties().iterator().forEachRemaining(x -> names.add(x.getName()));
+
     return names.toArray(new String[0]);
   }
 
@@ -42,15 +40,15 @@ public class ThresholdGenerator {
    * @param projects The BenchmarkProjects, cannot be null
    * @return 2D array of values of the measures of each project
    */
-  public double[][] getProjectMeasures(@NonNull BenchmarkProjects projects) {
+  public double[][] getProjectMeasures(@NonNull List<Project> projects) {
     double[][] matrix =
-        new double[projects.getProjects().size()][projects.getProject(0).getProperties().size()];
-    for (int i = 0; i < projects.getProjects().size(); i++) {
-      Project project = projects.getProjects().get(i);
-      for (int j = 0; j < projects.getProject(i).getProperties().size(); j++) {
+        new double[projects.get(0).getProperties().size()][projects.size()];
+    for (int i = 0; i < projects.size(); i++) {
+      Project project = projects.get(i);
+      for (int j = 0; j < projects.get(i).getProperties().size(); j++) {
         Property property = project.getProperties().get(j);
         double normValue = project.normalizeMeasure(property);
-        matrix[i][j] = normValue;
+        matrix[j][i] = normValue;
       }
     }
     return matrix;
@@ -64,7 +62,7 @@ public class ThresholdGenerator {
    *     distributions of each measure
    */
   public Map<String, Triple<Double, Double, Double>> generateThresholds(
-      @NonNull BenchmarkProjects projects) {
+      @NonNull List<Project> projects) {
     double[][] measures = getProjectMeasures(projects);
     String[] propertyNames = getPropertyNames(projects);
 
@@ -73,29 +71,48 @@ public class ThresholdGenerator {
     Map<String, Triple<Double, Double, Double>> data = Maps.newHashMap();
 
     for (int i = 0; i < propertyNames.length; i++) {
-      DescriptiveStatistics stats = new DescriptiveStatistics();
-      double[] property = measures[i];
+//      DescriptiveStatistics stats = new DescriptiveStatistics();
+      List<Double> property = Lists.newArrayList();
+      for (double value : measures[i]) property.add(value);
 
-      Arrays.stream(property).forEach(stats::addValue);
+      Collections.sort(property);
+//      property.forEach(stats::addValue);
 
-      double iqr = stats.getPercentile(0.25) - stats.getPercentile(0.25);
+      double lowerQ = 0;
+      double upperQ = 0;
+      double med = 0;
+      double cut = (double) property.size() / 4;
+      if (property.size() % 4 == 0) {
+        lowerQ = property.get((int) cut - 1);
+        upperQ = property.get((int) (3 * cut - 1));
+        med = property.get((int) (2 * cut));
+      } else {
+        lowerQ = (property.get((int) cut - 1) + property.get((int) cut)) / 2;
+        upperQ = (property.get((int) (3 * cut) - 1) + property.get((int) (3 * cut))) / 2;
+        med = (property.get((int) (2 * cut) - 1) + property.get((int) (2 *cut))) / 2;
+      }
+      double iqr = upperQ - lowerQ;
 
-      double t1 = 0.0;
-      double t3 = 0.0;
-      Arrays.sort(property);
-      double t2 = stats.getPercentile(50);
+      double lowerThreshold = lowerQ - (1.5 * iqr);
+      double t2 = med;
+      double upperThreshold = upperQ + (1.5 * iqr);
+
+//      double iqr = stats.getPercentile(0.75) - stats.getPercentile(0.25);
 
       // calculate the lower threshold (minimum non-outlier observation)
-      double lowerThreshold = stats.getPercentile(0.25) - 1.5 * iqr;
-      double[] part = Arrays.stream(property).filter((x) -> x >= lowerThreshold).toArray();
-      OptionalDouble opt = Arrays.stream(part).min();
-      if (opt.isPresent()) t1 = opt.getAsDouble();
+//      double lowerThreshold = stats.getPercentile(0.25) - 1.5 * iqr;
+      List<Double> part = property.stream().filter((x) -> x >= lowerThreshold).toList();
+      double t1 = Collections.min(part);
 
       // calculate the upper threshold (maximum non-outlier observation)
-      double upperThreshold = stats.getPercentile(0.75) + 1.5 * iqr;
-      part = Arrays.stream(property).filter((x) -> x <= upperThreshold).toArray();
-      opt = Arrays.stream(part).max();
-      if (opt.isPresent()) t3 = opt.getAsDouble();
+//      double upperThreshold = t2 + stats.getPercentile(0.75) + 1.5 * iqr;
+      part = property.stream().filter((x) -> x <= upperThreshold).toList();
+      double t3 = Collections.max(part);
+
+//      System.out.println("IQR: " + iqr);
+//      System.out.println("Lower: " + lowerThreshold);
+//      System.out.println("Median: " + t2);
+//      System.out.println("Upper: " + upperThreshold);
 
       data.put(propertyNames[i], Triple.of(t1, t2, t3));
     }

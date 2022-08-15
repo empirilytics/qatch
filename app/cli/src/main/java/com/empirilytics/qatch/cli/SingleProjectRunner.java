@@ -80,17 +80,13 @@ public class SingleProjectRunner extends Runner {
     log.info("* Analyzing Issues");
     issues.analyze(
         context.getWorkspacePath(),
-        context.getResultsPath() + "/" + project.getName(),
+        Paths.get(context.getResultsPath(), project.getName()).toAbsolutePath().normalize().toString(),
         project.getProperties());
 
     log.info("* Analyzing Metrics");
     metrics.analyze(
         context.getWorkspacePath(),
-        context.getResultsPath()
-            + "/"
-            + project.getName()
-            + "/"
-            + context.getCurrentProvider().getMetricsImporter().getFileName(),
+        Paths.get(context.getResultsPath(), project.getName(), context.getCurrentProvider().getMetricsImporter().getFileName()).toAbsolutePath().normalize().toString(),
         project.getProperties());
 
     // Print some messages to the user
@@ -114,7 +110,7 @@ public class SingleProjectRunner extends Runner {
     MetricsImporter metricImporter = context.getCurrentProvider().getMetricsImporter();
 
     // Get the directory with the results of the analysis
-    File resultsDir = new File(context.getResultsPath() + "/" + project.getName());
+    File resultsDir = Paths.get(context.getResultsPath(), project.getName()).toAbsolutePath().normalize().toFile();
     if (resultsDir.exists() && resultsDir.isDirectory()) {
       File[] results = resultsDir.listFiles();
 

@@ -13,4 +13,5 @@ include 'microservice'
 include 'calibration'
 include 'analyzers'
 include 'it'
+include 'project_importer'
 

@@ -1,6 +1,5 @@
 package com.empirilytics.qatch.calibration.io;
 
-import com.empirilytics.qatch.calibration.BenchmarkProjects;
 import com.empirilytics.qatch.core.eval.Project;
 import com.empirilytics.qatch.core.model.Characteristic;
 import com.empirilytics.qatch.core.model.Property;
@@ -16,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A Class that exports the results of an evaluation
@@ -43,7 +43,7 @@ public class EvaluationResultsExporter extends AbstractExporter {
    * @param tqi Evaluate TQI?
    */
   public void exportPropValuesAndTqiToXls(
-      @NonNull BenchmarkProjects projects,
+      @NonNull List<Project> projects,
       @NonNull String path,
       boolean includeName,
       boolean prop_norm,
@@ -75,10 +75,10 @@ public class EvaluationResultsExporter extends AbstractExporter {
 
     // Create the header of the xls file
     if (prop_norm) {
-      for (int i = 0; i < projects.getProject(0).getProperties().size(); i++) {
+      for (int i = 0; i < projects.get(0).getProperties().size(); i++) {
 
         // Get the i-th property
-        Property p = projects.getProject(0).getProperties().get(i);
+        Property p = projects.get(0).getProperties().get(i);
 
         // Set the name of the i-th column to the name of this Property
         rowhead.createCell(start).setCellValue(p.getName());
@@ -89,10 +89,10 @@ public class EvaluationResultsExporter extends AbstractExporter {
     // Check if the the properties' quality scores should be included in the xls file
     if (prop_eval) {
 
-      for (int i = 0; i < projects.getProject(0).getProperties().size(); i++) {
+      for (int i = 0; i < projects.get(0).getProperties().size(); i++) {
 
         // Get the i-th property
-        Property p = projects.getProject(0).getProperties().get(i);
+        Property p = projects.get(0).getProperties().get(i);
 
         // Set the name of the i-th column to the name of this Property
         rowhead.createCell(start).setCellValue(p.getName() + "_Eval");
@@ -103,10 +103,10 @@ public class EvaluationResultsExporter extends AbstractExporter {
     // Check if the the characteristics' quality scores should be included in the xls file
     if (char_eval) {
 
-      for (int i = 0; i < projects.getProject(0).getCharacteristics().size(); i++) {
+      for (int i = 0; i < projects.get(0).getCharacteristics().size(); i++) {
 
         // Get the i-th property
-        Characteristic c = projects.getProject(0).getCharacteristics().get(i);
+        Characteristic c = projects.get(0).getCharacteristics().get(i);
 
         // Set the name of the i-th column to the name of this Characteristic
         rowhead.createCell(start).setCellValue(c.getName() + "_Eval");

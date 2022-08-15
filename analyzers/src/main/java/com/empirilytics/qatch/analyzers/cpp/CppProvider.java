@@ -1,27 +1,43 @@
 package com.empirilytics.qatch.analyzers.cpp;
 
 import com.empirilytics.qatch.analyzers.LanguageProvider;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
+/**
+ * @author Isaac Griffith
+ * @version 2.0.0
+ */
 public class CppProvider extends LanguageProvider {
 
-    public static LanguageProvider instance() {
-        return InstanceHolder.INSTANCE;
-    }
+  public static LanguageProvider instance() {
+    return InstanceHolder.INSTANCE;
+  }
 
-    private static class InstanceHolder {
-        private static final LanguageProvider INSTANCE = new CppProvider();
-    }
+  private static class InstanceHolder {
+    private static final LanguageProvider INSTANCE = new CppProvider();
+  }
 
-    private CppProvider() {}
+  private CppProvider() {}
 
-    @Override
-    public void initialize(@NotNull String configPath, @NotNull String resultsPath) {
+  /** {@inheritDoc} */
+  @Override
+  public void initialize(@NonNull Map<String, String> config) {
+    super.initialize(config);
 
-    }
+    issuesAnalyzer = new CppCheckAnalyzer(config.get("cppcheckPath"), resultsPath, config.get("ruleSetPath"));
+    metricsAnalyzer = new CqmetricsAnalyzer(config.get("cqmetricsPath"), resultsPath);
+    issuesAggregator = new CppCheckAggregator();
+    metricsAggregator = new CqmetricsAggregator();
+    issuesImporter = new CppCheckResultsImporter();
+    metricsImporter = new CqmetricsResultsImporter();
+  }
 
-    @Override
-    public String getLanguage() {
-        return "c++";
-    }
+  /** {@inheritDoc}  */
+  @Override
+  public String getLanguage() {
+    return "cpp";
+  }
 }

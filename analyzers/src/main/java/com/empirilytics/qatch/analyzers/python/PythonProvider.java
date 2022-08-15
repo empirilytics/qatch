@@ -3,6 +3,8 @@ package com.empirilytics.qatch.analyzers.python;
 import com.empirilytics.qatch.analyzers.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 public class PythonProvider extends LanguageProvider {
 
     private PythonProvider() {
@@ -17,12 +19,10 @@ public class PythonProvider extends LanguageProvider {
     }
 
     @Override
-    public void initialize(@NotNull String configPath, @NotNull String resultsPath) {
-        this.configPath = configPath;
-        this.resultsPath = resultsPath;
-        loadConfig();
+    public void initialize(@NotNull Map<String, String> config) {
+        super.initialize(config);
 
-        issuesAnalyzer = new PylintAnalyzer(config.get("prospectorPath"), resultsPath, config.get("ruleSetPath"));
+        issuesAnalyzer = new PylintAnalyzer(config.get("pylintPath"), resultsPath, config.get("ruleSetPath"));
         metricsAnalyzer = new CKPMAnalyzer(config.get("ckpmPath"), resultsPath);
         issuesImporter = new PylintResultsImporter();
         metricsImporter = new CKPMResultsImporter();

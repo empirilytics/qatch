@@ -1,6 +1,5 @@
 package com.empirilytics.qatch.calibration.io;
 
-import com.empirilytics.qatch.calibration.BenchmarkProjects;
 import com.empirilytics.qatch.core.eval.Project;
 import com.google.gson.Gson;
 import lombok.NonNull;
@@ -8,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This class is responsible for exporting the results of the benchmark analysis and aggregation in
@@ -45,7 +45,7 @@ public class BenchmarkAnalysisExporter {
    * @param projects The BenchmarkProject to export, cannot be null
    * @param path The path to export to, cannot be null or empty
    */
-  public void exportToJSON(@NonNull BenchmarkProjects projects, @NonNull String path) {
+  public void exportToJSON(@NonNull List<Project> projects, @NonNull String path) {
     if (path.isEmpty()) throw new IllegalArgumentException("Path cannot be empty");
 
     // Create the json parser
@@ -57,7 +57,7 @@ public class BenchmarkAnalysisExporter {
     // Iterate through the projects
     for (int i = 0; i < projects.size(); i++) {
 
-      Project project = projects.getProject(i);
+      Project project = projects.get(i);
       String json = gson.toJson(project.getProperties());
       totalJson += json + ",";
     }

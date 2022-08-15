@@ -1,7 +1,7 @@
 import java.nio.file.Paths
 
 plugins {
-    id 'java-conventions'
+    id 'java-app-conventions'
 }
 
 group = 'com.empirilytics.qatch.analyzers'
@@ -15,4 +15,9 @@ dependencies {
 
 javadoc {
     destinationDir = new File(project.rootDir.toString() + "/docs/analyzers/javadoc")
+}
+
+application {
+    mainClass = 'com.empirilytics.qatch.analyzers.python.PylintResultsImporter'
+    applicationName = 'qatch'
 }
